@@ -34,28 +34,22 @@ main();
 function main() {
     console.log('Start running gitp');
 
-    ifNodeModule(()=>{
+    if(isNodeModule()) {
         console.log(chalk.yellow('run prepull hook'));
         new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
-    });
+    }
 
     console.log(chalk.yellow('run git pull'));
     new CMD('git', ['pull'].concat(process.argv.slice(2))).execute();
 
-    ifNodeModule(()=>{
+    if(isNodeModule()) {
         console.log(chalk.yellow('run postpull hook'));
         new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'postpull']).execute();
-    });
+    }
 
     console.log(chalk.green('done!'));
 }
 
 function isNodeModule() {
     return fs.existsSync('package.json');
-}
-
-function ifNodeModule(cb) {
-    if(isNodeModule())
-        cb();
-
 }
