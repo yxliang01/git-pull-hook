@@ -47,7 +47,7 @@ function main() {
         console.log(chalk.yellow('run postpull hook'));
         new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'postpull']).execute();
     }
-
+    
     console.log(chalk.green('done!'));
 }
 

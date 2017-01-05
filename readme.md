@@ -1,10 +1,10 @@
-git-pull
+gitpull
 =====
 
-[![Build Status](https://travis-ci.org/yxliang01/git-pull.svg?branch=master)](https://travis-ci.org/yxliang01/git-pull)
-[![Dependency Status](https://david-dm.org/yxliang01/git-pull.svg)]()
-[![Code Climate](https://codeclimate.com/github/yxliang01/git-pull/badges/gpa.svg)](https://codeclimate.com/github/yxliang01/git-pull)
-[![NSP Status](https://nodesecurity.io/orgs/yxliang01/projects/2ee46d77-7ef2-48d9-af30-cfa524c26824/badge)](https://nodesecurity.io/orgs/yxliang01/projects/2ee46d77-7ef2-48d9-af30-cfa524c26824)
+[![Build Status](https://travis-ci.org/yxliang01/gitpull.svg?branch=master)](https://travis-ci.org/yxliang01/gitpull)
+[![Dependency Status](https://david-dm.org/yxliang01/gitpull.svg)]()
+[![Code Climate](https://codeclimate.com/github/yxliang01/gitpull/badges/gpa.svg)](https://codeclimate.com/github/yxliang01/gitpull)
+[![NSP Status](https://nodesecurity.io/orgs/yxliang01/projects/815f92ed-7900-455a-a285-218967f8eb8f/badge)](https://nodesecurity.io/orgs/yxliang01/projects/815f92ed-7900-455a-a285-218967f8eb8f)
 
 `gitp ARGUMENTS_FOR_GIT_PULL` = `npm run prepull && git pull ARGUMENTS_FOR_GIT_PULL && npm run postpull`
 
@@ -12,7 +12,7 @@ git-pull
 
 To install:
 ```bash
-npm install -g git-pull
+npm install -g gitpull
 ```
 
 To Use:
