@@ -1,13 +1,13 @@
 {
-  "name": "gitpull",
+  "name": "git-pull-hook",
   "version": "1.0.0",
   "description": "Allows you to add pull hooks (prepull and postpull) for gits",
   "bin": {
     "gitp": "dist/index.js",
-    "gitpull": "dist/index.js"
+    "git-pull-hook": "dist/index.js"
   },
-  "repository": "https://github.com/yxliang01/gitpull.git",
-  "bugs": "https://github.com/yxliang01/gitpull/issues",
+  "repository": "https://github.com/yxliang01/git-pull-hook.git",
+  "bugs": "https://github.com/yxliang01/git-pull-hook/issues",
   "author": "Xiao Liang",
   "license": "MIT",
   "preferGlobal": true,
