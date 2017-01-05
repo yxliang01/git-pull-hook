@@ -1,13 +1,13 @@
 {
-  "name": "prepull",
+  "name": "git-pull",
   "version": "1.0.0",
-  "description": "Allows you to add prepull hook for gits",
+  "description": "Allows you to add pull hooks (prepull and postpull) for gits",
   "bin": {
-    "gitpp": "dist/index.js",
-    "git-prepull": "dist/index.js"
+    "gitp": "dist/index.js",
+    "git-pull": "dist/index.js"
   },
-  "repository": "https://github.com/yxliang01/prepull.git",
-  "bugs": "https://github.com/yxliang01/prepull/issues",
+  "repository": "https://github.com/yxliang01/git-pull.git",
+  "bugs": "https://github.com/yxliang01/git-pull/issues",
   "author": "Xiao Liang",
   "license": "MIT",
   "preferGlobal": true,
@@ -15,7 +15,8 @@
     "build": "babel src --out-dir dist",
     "publish-please": "publish-please",
     "prepublish": "publish-please guard",
-    "prepull": "rimraf dist"
+    "prepull": "rimraf dist",
+    "postpull": "build"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

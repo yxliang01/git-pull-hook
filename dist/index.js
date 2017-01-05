@@ -9,6 +9,10 @@ var _chalk2 = _interopRequireDefault(_chalk);
 
 var _child_process = require("child_process");
 
+var _fs = require("fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,7 +39,7 @@ var CMD = function () {
                 if (childProcess.error) {
                     throw childProcess.error;
                 }
-                console.log(_chalk2.default.red('gitpp failed.'));
+                console.log(_chalk2.default.red('gitp failed.'));
                 process.exit(1);
             }
         }
@@ -47,9 +51,25 @@ var CMD = function () {
 main();
 
 function main() {
-    console.log('Start running gitpp');
-    new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
+    console.log('Start running gitp');
+
+    if (isNodeModule()) {
+        console.log(_chalk2.default.yellow('run prepull hook'));
+        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
+    }
+
+    console.log(_chalk2.default.yellow('run git pull'));
     new CMD('git', ['pull'].concat(process.argv.slice(2))).execute();
+
+    if (isNodeModule()) {
+        console.log(_chalk2.default.yellow('run postpull hook'));
+        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'postpull']).execute();
+    }
+
     console.log(_chalk2.default.green('done!'));
+}
+
+function isNodeModule() {
+    return _fs2.default.existsSync('package.json');
 }
 //# sourceMappingURL=index.js.map

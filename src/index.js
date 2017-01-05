@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import {spawnSync} from "child_process";
+import fs from 'fs';
 
 class CMD {
 
@@ -21,7 +22,7 @@ class CMD {
             if(childProcess.error) {
                 throw childProcess.error;
             }
-            console.log(chalk.red('gitpp failed.'));
+            console.log(chalk.red('gitp failed.'));
             process.exit(1);
         }
 
@@ -31,8 +32,25 @@ class CMD {
 main();
 
 function main() {
-    console.log('Start running gitpp');
-    new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
+    console.log('Start running gitp');
+
+
+    if(isNodeModule()) {
+        console.log(chalk.yellow('run prepull hook'));
+        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
+    }
+
+    console.log(chalk.yellow('run git pull'));
     new CMD('git', ['pull'].concat(process.argv.slice(2))).execute();
+
+    if(isNodeModule()) {
+        console.log(chalk.yellow('run postpull hook'));
+        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'postpull']).execute();
+    }
+
     console.log(chalk.green('done!'));
+}
+
+function isNodeModule() {
+    return fs.existsSync('package.json');
 }
