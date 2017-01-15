@@ -940,10 +940,6 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fibers@1.0.x:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-1.0.15.tgz#22f039c8f18b856190fbbe4decf056154c1eae9c"
-
 figures@^1.3.5:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -2295,12 +2291,6 @@ supports-color@^0.2.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
-
-synchronize@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/synchronize/-/synchronize-2.0.0.tgz#b5eb89964c4bad6e42caa4143cad26cef1edf422"
-  dependencies:
-    fibers "1.0.x"
 
 tar-pack@~3.3.0:
   version "3.3.0"
