@@ -13,6 +13,14 @@ var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _inquirer = require("inquirer");
+
+var _inquirer2 = _interopRequireDefault(_inquirer);
+
+var _jsonfile = require("jsonfile");
+
+var _jsonfile2 = _interopRequireDefault(_jsonfile);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27,21 +35,35 @@ var CMD = function () {
 
     _createClass(CMD, [{
         key: "execute",
-        value: function execute() {
+        value: function execute(cb) {
+            var _this = this;
 
-            var childProcess = (0, _child_process.spawnSync)(this.path, this.args, {
-                cwd: process.cwd(),
-                stdio: 'inherit',
-                env: process.env
-            });
+            return new Promise(function (resolve, reject) {
+                var childProcess = (0, _child_process.spawnSync)(_this.path, _this.args, {
+                    cwd: process.cwd(),
+                    stdio: 'inherit',
+                    env: process.env
+                });
 
-            if (childProcess.status !== 0) {
-                if (childProcess.error) {
-                    throw childProcess.error;
+                if (childProcess.status !== 0) {
+
+                    _inquirer2.default.prompt({ type: 'confirm', name: 'ans', message: 'command failed.. Would you like to continue the execution?', default: false }).then(function (ans) {
+
+                        if (ans.ans !== true) {
+
+                            if (childProcess.error) {
+                                throw childProcess.error;
+                            }
+                            console.log(_chalk2.default.red('gitp failed.'));
+                            process.exit(1);
+                        } else {
+                            resolve();
+                        }
+                    });
+                } else {
+                    resolve();
                 }
-                console.log(_chalk2.default.red('gitp failed.'));
-                process.exit(1);
-            }
+            });
         }
     }]);
 
@@ -51,25 +73,31 @@ var CMD = function () {
 main();
 
 function main() {
+
     console.log('Start running gitp');
 
-    if (isNodeModule()) {
-        console.log(_chalk2.default.yellow('run prepull hook'));
-        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'prepull']).execute();
-    }
-
-    console.log(_chalk2.default.yellow('run git pull'));
-    new CMD('git', ['pull'].concat(process.argv.slice(2))).execute();
-
-    if (isNodeModule()) {
-        console.log(_chalk2.default.yellow('run postpull hook'));
-        new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'postpull']).execute();
-    }
-
-    console.log(_chalk2.default.green('done!'));
+    runHook('prepull').then(function () {
+        console.log(_chalk2.default.yellow('run git pull'));
+        return new CMD('git', ['pull'].concat(process.argv.slice(2))).execute();
+    }).then(function () {
+        return runHook('postpull');
+    }).then(function () {
+        console.log(_chalk2.default.green('done!'));
+    });
 }
 
-function isNodeModule() {
-    return _fs2.default.existsSync('package.json');
+function runHook(name) {
+    if (hasHook(name)) {
+        console.log(_chalk2.default.yellow("run " + name + " hook"));
+        return new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', name]).execute();
+    }
+    return Promise.resolve();
 }
-//# sourceMappingURL=index.js.map
+
+function hasHook(name) {
+    try {
+        if (typeof _jsonfile2.default.readFileSync('package.json').scripts[name] !== 'undefined') return true;
+    } catch (err) {}
+
+    return false;
+}
