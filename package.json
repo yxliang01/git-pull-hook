@@ -16,7 +16,8 @@
     "publish-please": "publish-please",
     "prepublish": "publish-please guard",
     "prepull": "rimraf dist",
-    "postpull": "npm run build"
+    "postpull": "npm run build",
+    "postpublish": "git push --tags"
   },
   "engines": {
     "node": ">=4"
