@@ -68,6 +68,8 @@ function runHook(name) {
     if (hasHook(name)) {
         console.log(chalk.yellow(`run ${name} hook`));
         return (new CMD(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', name]).execute());
+    } else {
+        console.log(chalk.blue(`${name} hook not found, skipping`));
     }
     return Promise.resolve();
 }
